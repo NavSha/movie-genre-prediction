@@ -8,6 +8,8 @@
 *.log
 *.log.*
 *.sig
+*.h5
 
 pkg/
-src/
+logs/
+dataset/

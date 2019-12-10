@@ -15,12 +15,12 @@ from sklearn.model_selection import train_test_split
 train_data = pd.read_csv('train.csv')
 train_images = []
 for i in tqdm(range(train_data.shape[0])):
-    img = image.load_img('../multi_label_dataset/Images/'+train_data['ImageId'][i], target_size = (112,112,3))
+    img = image.load_img('../multi_label_dataset/Images/'+train_data['Id'][i]+'.jpg', target_size = (112,112,3))
     img = image.img_to_array(img)
     img = img/255
     train_images.append(img)
 X = np.array(train_images)
-y = np.array(train_data.drop(['ImageId'],axis = 1))
+y = np.array(train_data.drop(['Id','Genre'],axis = 1))
 X_train, X_test, y_train, y_test = train_test_split(X,y, random_state = 42, test_size = 0.2)
 
 #define the model
@@ -33,7 +33,7 @@ model.add(layers.Conv2D(128,(3,3), activation = 'relu'))
 model.add(layers.MaxPooling2D(2,2))
 model.add(layers.Flatten())
 model.add(layers.Dense(1024, activation = 'relu'))
-model.add(layers.Dense(46,activation = 'sigmoid'))
+model.add(layers.Dense(25,activation = 'sigmoid'))
 
 #compile the model
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
@@ -66,7 +66,7 @@ plt.show()
 
 plt.plot(epochs,acc,'bo',label = 'Training Accuracy')
 plt.plot(epochs, val_acc, 'b', label = 'Validation Accuracy')
-plt.title('Training and validation accur'test
+plt.title('Training and validation accuracy')
 plt.legend()
 plt.show()
 
